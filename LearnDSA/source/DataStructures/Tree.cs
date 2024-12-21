@@ -32,6 +32,7 @@
             public int Data
             {
                 get { return _data; }
+                set { _data = value; }
             }
 
             public Node(int data)
@@ -65,7 +66,8 @@
 
             LevelOrderTraversal(firstNode);
 
-            Logger.Info($"{10} is {(Tree.Search(firstNode, 10) ? "found" : "not-found")}");
+            Logger.Info($"{5} is {(Tree.Search(firstNode, 5) ? "found" : "not-found")}");
+            Tree.Delete(firstNode, 5);
             Logger.Info($"{5} is {(Tree.Search(firstNode, 5) ? "found" : "not-found")}");
         }
 
@@ -116,7 +118,7 @@
         #endregion
 
         #region Tree Insersion Algorithms
-        public static Node Insert(Node? root, int data)
+        public static Node? Insert(Node? root, int data)
         {
             if (root == null)
                 return new Node(data);
@@ -162,13 +164,71 @@
             // searching for
             if (root.Data == data) return true;
 
-            // Recursively search in the left and right subtrees
+            // Recursively search in the Left and Right subtrees
             bool left_res = Search(root.Left, data);
             bool right_res = Search(root.Right, data);
 
             return left_res || right_res;
         }
         #endregion
+        #endregion
+
+        #region Tree Deletion Algorithm
+        public static Node? Delete(Node? root, int val)
+        {
+            if (root == null) return null;
+
+            // Use a queue to perform BFS
+            Queue<Node?> q = new Queue<Node?>();
+            q.Enqueue(root);
+            Node? target = null;
+
+            // Find the target node
+            while (q.Count > 0)
+            {
+                Node? curr = q.Dequeue();
+
+                if (curr.Data == val)
+                {
+                    target = curr;
+                    break;
+                }
+                if (curr.Left != null) q.Enqueue(curr.Left);
+                if (curr.Right != null) q.Enqueue(curr.Right);
+            }
+            if (target == null) return root;
+
+            // Find the deepest rightmost node and its parent
+            Node? lastNode = null;
+            Node? lastParent = null;
+            Queue<(Node?, Node?)> q1 = new Queue<(Node?, Node?)>();
+            q1.Enqueue((root, null));
+
+            while (q1.Count > 0)    
+            {
+                var (curr, parent) = q1.Dequeue();
+                lastNode = curr;
+                lastParent = parent;
+
+                if (curr.Left != null) q1.Enqueue((curr.Left, curr));
+                if (curr.Right != null) q1.Enqueue((curr.Right, curr));
+            }
+
+            // Replace target's value with the last node's value
+            target.Data = lastNode.Data;
+
+            // Remove the last node
+            if (lastParent != null)
+            {
+                if (lastParent.Left == lastNode) lastParent.Left = null;
+                else lastParent.Right = null;
+            }
+            else
+            {
+                return null;
+            }
+            return root;
+        }
         #endregion
     }
 
