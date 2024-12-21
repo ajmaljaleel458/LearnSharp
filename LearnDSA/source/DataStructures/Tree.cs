@@ -64,6 +64,9 @@
             Tree.Insert(firstNode, 100);
 
             LevelOrderTraversal(firstNode);
+
+            Logger.Info($"{10} is {(Tree.Search(firstNode, 10) ? "found" : "not-found")}");
+            Logger.Info($"{5} is {(Tree.Search(firstNode, 5) ? "found" : "not-found")}");
         }
 
         #region Tree Traversal Algorithms
@@ -147,6 +150,25 @@
             }
             return root;
         }
+        #endregion
+
+        #region Tree Search Algorithms
+        #region Deapth First Search
+        public static bool Search(Node? root, int data)
+        {
+            if (root == null) return false;
+
+            // If the node's data is equal to the value we are
+            // searching for
+            if (root.Data == data) return true;
+
+            // Recursively search in the left and right subtrees
+            bool left_res = Search(root.Left, data);
+            bool right_res = Search(root.Right, data);
+
+            return left_res || right_res;
+        }
+        #endregion
         #endregion
     }
 
