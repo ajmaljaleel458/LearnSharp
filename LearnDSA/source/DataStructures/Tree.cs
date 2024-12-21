@@ -61,6 +61,8 @@
             thirdNode.Left = sixthNode;
             thirdNode.Right = seventhNode;
 
+            Tree.Insert(firstNode, 100);
+
             LevelOrderTraversal(firstNode);
         }
 
@@ -109,7 +111,46 @@
         }
         #endregion
         #endregion
+
+        #region Tree Insersion Algorithms
+        public static Node Insert(Node? root, int data)
+        {
+            if (root == null)
+                return new Node(data);
+
+            Queue<Node> queue = new Queue<Node>();
+            queue.Enqueue(root);
+
+            while (queue.Count > 0)
+            {
+                Node temp = queue.Dequeue();
+
+                if (temp.Left == null)
+                {
+                    temp.Left = new Node(data);
+                    break;
+                }
+                else
+                {
+                    queue.Enqueue(temp.Left);
+                }
+
+                if (temp.Right == null)
+                {
+                    temp.Right = new Node(data);
+                    break;
+                }
+                else
+                {
+                    queue.Enqueue(temp.Right);
+                }
+            }
+            return root;
+        }
+        #endregion
     }
+
+
 
     public class TreeDataStructure
     {
