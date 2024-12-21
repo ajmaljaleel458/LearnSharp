@@ -1,0 +1,40 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0-windows10.0.26100.0</TargetFramework>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <Nullable>disable</Nullable>
+    <StartupObject>LearnCSharp.Application.Application</StartupObject>
+    <PlatformTarget>x64</PlatformTarget>
+    <BaseOutputPath>C:\Dev\LearnCSharp\bin</BaseOutputPath>
+    <GenerateDocumentationFile>False</GenerateDocumentationFile>
+    <Platforms>AnyCPU;x64</Platforms>
+    <AssemblyName>$(MSBuildProjectName)</AssemblyName>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DefineConstants>$(DefineConstants);FIG;LSDEBUG</DefineConstants>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <DefineConstants>$(DefineConstants);FIG;LSDEBUG</DefineConstants>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DefineConstants>$(DefineConstants);LSRELEASE</DefineConstants>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <DefineConstants>$(DefineConstants);LSRELEASE</DefineConstants>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CrashDectector\CrashDectector.csproj" />
+    <ProjectReference Include="..\LearnDSA\LearnDSA.csproj" />
+    <ProjectReference Include="..\LearnSharp\LearnSharp.csproj" />
+    <ProjectReference Include="..\Sandbox\Sandbox.csproj" />
+    <ProjectReference Include="..\UseLessLogger\UseLessLogger.csproj" />
+  </ItemGroup>
+
+</Project>
