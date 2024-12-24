@@ -7,8 +7,7 @@
         public static void Execute()
         {
             Logger.Info("Welcome to Data Structure and Algorithm...");
-
-            TreeDataStructure.Execute();
+            BinarySearchTree.SandBox();
         }
     }
 }

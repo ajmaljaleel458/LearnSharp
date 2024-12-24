@@ -4,9 +4,11 @@ namespace LearnCSharp.Application
 {
     using Logger;
     using DataStructureAndAlgorith;
+    using LearnSharp.ObjectOrientedPrograming;
+    using Utility;
     public class Application
     {
-        static void Main(string[] argumenst)
+        public static void Main(String[] args)
         {
             DataStructureAndAlgorith.Execute();
 
