@@ -6,6 +6,9 @@
     <Nullable>enable</Nullable>
     <BaseOutputPath>C:\Dev\LearnCSharp\bin</BaseOutputPath>
     <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+    <Configurations>Debug</Configurations>
+    <Platforms>x64</Platforms>
+	<platformTarget>x64</platformTarget>
   </PropertyGroup>
 
   <ItemGroup>

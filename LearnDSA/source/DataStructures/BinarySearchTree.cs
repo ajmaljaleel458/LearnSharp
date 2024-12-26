@@ -130,6 +130,30 @@
                         else if (parent.Right == node)
                             parent.Right = null;
                     }
+                    else if (node.Right == null)
+                    {
+                        parent.Left = node?.Left;
+                    }
+                    else if (node.Left == null)
+                    {
+                        parent.Right = node?.Right;
+                    }
+
+                    Node? current = node?.Right;
+
+                    Node? successParent = null;
+
+                    while (current != null && current.Left != null)
+                    {
+                        successParent = current;
+                        current = current.Left;
+                    }
+                    Node? succ = current;
+
+                    node.Data = succ.Data;
+
+                    successParent.Left = null;
+
                     return;
                 }
             }
@@ -157,11 +181,15 @@
             tree.Insert(250);
             tree.Insert(350);
 
-            Logger.Info($"{tree.Contains(55)}");
+            Logger.Info($"{tree.Contains(100)}");
 
+            tree.Delete(100);
+            tree.Delete(200);
+            tree.Delete(300);
             tree.Delete(55);
+            tree.Delete(250);
 
-            Logger.Info($"{tree.Contains(55)}");
+            Logger.Info($"{tree.Contains(100)}");
         }
     }
 }

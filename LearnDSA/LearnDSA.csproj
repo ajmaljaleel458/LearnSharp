@@ -6,20 +6,19 @@
     <Nullable>enable</Nullable>
     <PlatformTarget>x64</PlatformTarget>
     <BaseOutputPath>C:\Dev\LearnCSharp\bin</BaseOutputPath>
-    <Platforms>AnyCPU;x64</Platforms>
+    <Platforms>x64</Platforms>
+	<platformTarget>x64</platformTarget>
+    <Configurations>Debug</Configurations>
   </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'" />
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" />
 
   <ItemGroup>
-    <PackageReference Include="ClickableTransparentOverlay" Version="11.0.1" />
-    <PackageReference Include="ImGui.NET" Version="1.91.0.1" />
+    <ProjectReference Include="..\UseLessLogger\UseLessLogger.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\UseLessLogger\UseLessLogger.csproj" />
+    <Folder Include="source\DataStructures\BinaryTree\" />
   </ItemGroup>
 
 </Project>
