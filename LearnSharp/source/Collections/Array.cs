@@ -1,6 +1,8 @@
 ﻿namespace LearnSharp.Collections
 {
     using Logger;
+    using System.Collections.Generic;
+
     public class StudentLog
     {
         private string[] _studentNames;
@@ -121,22 +123,97 @@
                 Logger.Info($"Product : {_products[index]}, Quantity : {_quantity[index]}");
         }
     }
+
+    public sealed class ToDoList
+    {
+        private Task[] _todoTaks;
+
+        private readonly int TODO_MAX_CAPACITY;
+
+        private int _numberOfTasks;
+
+        public sealed class Task
+        {
+            public string title;
+
+            public string dscription;
+
+            public bool isDone = false;
+
+            public Task(string title, string discription)
+            {
+                this.title = title;
+                this.dscription = discription;
+            }
+        }
+
+        public ToDoList(int capacity)
+        {
+            TODO_MAX_CAPACITY = capacity;
+
+            _todoTaks = new Task[TODO_MAX_CAPACITY];
+
+            _numberOfTasks = 0;
+        }
+
+        public void NewTask(string title, string discription)
+        {
+            Task newTask = new Task(title, discription);
+
+            _todoTaks[_numberOfTasks] = newTask;
+
+            _numberOfTasks++;
+        }
+
+        public void DeleteAllCompleted()
+        {
+            for (int index = 0; index < _numberOfTasks; index++)
+            {
+                if (_todoTaks[index].isDone)
+                {
+                    for (int innerInde = index; innerInde < _numberOfTasks; innerInde++)
+                    {
+                        _todoTaks[innerInde] = _todoTaks[(innerInde + 1)];
+                    }
+                    _numberOfTasks--;
+                }
+            }
+        }   
+        public void MarkDone(string title)
+        {
+            for (int index = 0; index < _numberOfTasks; index++)
+            {
+                if (_todoTaks[index].title == title)
+                {
+                    _todoTaks[index].isDone = true;
+                    return;
+                }
+            }
+        }
+
+        public void ViewTodoList()
+        {
+            for (int index = 0; index < _numberOfTasks; index++)
+                Logger.Info($"Title: {_todoTaks[index].title}," +
+                    $" Discription: {_todoTaks[index].dscription}," +
+                    $" Status: {(_todoTaks[index].isDone ? "Done" : "Pendng")}");
+        }
+    }
     public class Array
     {   
         public static void SandBox()
         {
-            InventoryManager manager = new InventoryManager(10);
+            ToDoList list = new ToDoList(10);
 
-            manager.AddProduct("Apple", 10);
-            manager.AddProduct("Orange", 40);
-            manager.AddProduct("Grapes", 50);
-            manager.AddProduct("PineApple", 20);
+            list.NewTask("Leet Code", "Do 1 hour leetcode each day");
+            list.NewTask("Git Commit", "Commit to git every day");
 
-            manager.ClearProduct("PineApple");
+            list.MarkDone("Git Commit");
+            list.MarkDone("Leet Code");
 
-            manager.UpdateProduct("Apple", 100);
+            list.DeleteAllCompleted();
 
-            manager.InspectInventory();
+            list.ViewTodoList();
         }
     }
 }
