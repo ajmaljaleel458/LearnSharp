@@ -1,9 +1,6 @@
 ﻿namespace LearnSharp.Collections
 {
     using Logger;
-    using System;
-    using static global::LearnSharp.Collections.StudentLog;
-
     public class StudentLog
     {
         private string[] _studentNames;
@@ -62,23 +59,84 @@
                 Logger.Info($"Day {index + 1} : {_temperatures[index]}");
         }
     }
+
+    public sealed class InventoryManager
+    {
+        private string[] _products;
+        private int[] _quantity;
+
+        private int _numberOfProducts;
+
+        private readonly int INVENTORY_MAX_CAPACITY;
+
+        public InventoryManager(int inventoryCapacity)
+        {
+            INVENTORY_MAX_CAPACITY = inventoryCapacity;
+
+            _products = new string[INVENTORY_MAX_CAPACITY];
+            _quantity = new int[INVENTORY_MAX_CAPACITY];
+
+            _numberOfProducts = 0;
+        }
+
+        public void AddProduct(string productName, int baseQuantity)
+        {
+            _products[_numberOfProducts] = productName;
+            _quantity[_numberOfProducts] = baseQuantity;
+            _numberOfProducts++;
+        }
+
+        public void ClearProduct(string productname)
+        {
+            for (int index = 0; index < _numberOfProducts; index++)
+            {
+                if (_products[index] == productname)
+                {
+                    for (;index < _numberOfProducts; index++)
+                    {
+                        _products[index] = _products[(index + 1)];
+                        _quantity[index] = _quantity[(index + 1)];
+                    }
+                    _numberOfProducts--;
+                    return;
+                }
+            }
+        }
+
+        public void UpdateProduct(string productname, int newQuantity)
+        {
+            for (int index = 0; index < _numberOfProducts; index++)
+            {
+                if (_products[index] == productname)
+                {
+                    _quantity[index] = newQuantity;
+                    return;
+                }
+            }
+        }
+
+        public void InspectInventory()
+        {
+            for (int index = 0; index < _numberOfProducts; index++)
+                Logger.Info($"Product : {_products[index]}, Quantity : {_quantity[index]}");
+        }
+    }
     public class Array
     {   
         public static void SandBox()
         {
-            StudentLog studentLog = new StudentLog(5);
+            InventoryManager manager = new InventoryManager(10);
 
-            studentLog.Insert("Ajmal", 99.9f);
-            studentLog.Insert("Asiya", 80.0f);
-            studentLog.Insert("Haris", 56.7f);
-            studentLog.Insert("Akumal", 100f);
+            manager.AddProduct("Apple", 10);
+            manager.AddProduct("Orange", 40);
+            manager.AddProduct("Grapes", 50);
+            manager.AddProduct("PineApple", 20);
 
-            studentLog.EachStudent((string name, float score) =>
-            {
-                Logger.Info($"Name : {name}, Score : {score}");
-            });
+            manager.ClearProduct("PineApple");
 
-            Logger.Info($"Averag score: {studentLog.GetAverageScore()}");
+            manager.UpdateProduct("Apple", 100);
+
+            manager.InspectInventory();
         }
     }
 }
