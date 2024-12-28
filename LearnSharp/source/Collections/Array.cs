@@ -203,17 +203,7 @@
     {   
         public static void SandBox()
         {
-            ToDoList list = new ToDoList(10);
 
-            list.NewTask("Leet Code", "Do 1 hour leetcode each day");
-            list.NewTask("Git Commit", "Commit to git every day");
-
-            list.MarkDone("Git Commit");
-            list.MarkDone("Leet Code");
-
-            list.DeleteAllCompleted();
-
-            list.ViewTodoList();
         }
     }
 }
